@@ -14,14 +14,15 @@
             text-align: center;
             margin: 0;
             padding: 0;
+            font-size: 1.3em;
         }
         .hero {
             background: url('background.png') no-repeat center center/cover;
-            padding: 100px 20px;
+            padding: 104px 26px;
             position: relative;
         }
         .overlay {
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(14, 17, 19, 0.8);
             position: absolute;
             top: 0;
             left: 0;
@@ -34,61 +35,77 @@
             margin: auto;
         }
         .title {
-            font-size: 4em;
+            font-size: 4.55em;
             font-weight: bold;
             text-transform: uppercase;
-            text-shadow: 0 0 10px red, 0 0 20px darkred, 0 0 30px red;
+            text-shadow: 0 0 10px rgba(223, 197, 136, 0.8), 0 0 20px rgba(223, 197, 136, 0.8), 0 0 30px rgba(223, 197, 136, 0.8);
             animation: neonGlow 1.5s infinite alternate ease-in-out;
         }
         
         @keyframes neonGlow {
             0% {
-                text-shadow: 0 0 5px red, 0 0 10px darkred, 0 0 15px red;
+                text-shadow: 0 0 5px rgba(223, 197, 136, 0.8), 0 0 10px rgba(223, 197, 136, 0.8), 0 0 15px rgba(223, 197, 136, 0.8);
                 opacity: 0.8;
             }
             100% {
-                text-shadow: 0 0 20px red, 0 0 30px darkred, 0 0 40px red;
+                text-shadow: 0 0 20px rgba(223, 197, 136, 0.8), 0 0 30px rgba(223, 197, 136, 0.8), 0 0 40px rgba(223, 197, 136, 0.8);
                 opacity: 1;
             }
         }
         
         .subtitle {
-            font-size: 1.8em;
+            font-size: 2.08em;
             margin-top: 10px;
             font-weight: 300;
             text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
         }
         .button {
             display: inline-block;
-            padding: 15px 40px;
-            margin-top: 30px;
-            font-size: 1.5em;
+            padding: 15.6px 45.5px;
+            margin-top: 26px;
+            font-size: 1.69em;
             color: white;
-            background: linear-gradient(45deg, red, darkred);
+            background: linear-gradient(45deg, rgba(223, 197, 136, 0.8), rgba(223, 197, 136, 0.8));
             text-decoration: none;
             border-radius: 8px;
             font-weight: bold;
             text-transform: uppercase;
             transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.5);
+            box-shadow: 0 4px 15px rgba(223, 197, 136, 0.5);
         }
         .button:hover {
-            background: linear-gradient(45deg, darkred, black);
-            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.9);
+            background: linear-gradient(45deg, rgba(223, 197, 136, 0.8), black);
+            box-shadow: 0 4px 15px rgba(223, 197, 136, 0.9);
         }
         .stats {
-            margin-top: 50px;
+            margin-top: 39px;
             display: flex;
-            justify-content: center;
-            gap: 60px;
-            flex-wrap: wrap;
-            padding: 40px 0;
+            flex-direction: column;
+            align-items: center;
+            padding: 26px 0;
             background: black;
         }
+        .logo {
+            width: 364px;
+            height: auto;
+            margin-bottom: 13px;
+        }
+        .stat-container {
+            display: flex;
+            justify-content: center;
+            gap: 52px;
+            flex-wrap: wrap;
+            margin-bottom: 13px;
+        }
         .stat {
-            font-size: 1.5em;
+            font-size: 1.82em;
             font-weight: bold;
             text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+        }
+        .map {
+            width: 1366px;
+            height: 729px;
+            margin-top: 26px;
         }
     </style>
 </head>
@@ -102,10 +119,14 @@
         </div>
     </div>
     <div class="stats">
-        <div class="stat">FRAȚIE</div>
-        <div class="stat">RESPECT</div>
-        <div class="stat">ÎNȚELEGERE</div>
-        <div class="stat">EXPERIENȚĂ</div>
+        <img src="aelogo.png" alt="AE Logo" class="logo">
+        <div class="stat-container">
+            <div class="stat">FRAȚIE</div>
+            <div class="stat">RESPECT</div>
+            <div class="stat">ÎNȚELEGERE</div>
+            <div class="stat">EXPERIENȚĂ</div>
+        </div>
+        <img src="map.png" alt="Map" class="map">
     </div>
 </body>
 </html>
