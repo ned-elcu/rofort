@@ -15,19 +15,28 @@
             margin: 0;
             padding: 0;
             font-size: 1.3em;
+        }
+        .top-bar {
+            width: 100%;
+            height: 50px;
+            background: black;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        .top-bar img {
+            width: 50px;
+            height: 50px;
         }
         .hero {
             background: url('background.png') no-repeat center center/cover;
             padding: 104px 26px;
             position: relative;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
+            margin-top: 50px;
         }
         .overlay {
             background: rgba(14, 17, 19, 0.8);
@@ -41,7 +50,6 @@
             position: relative;
             max-width: 900px;
             margin: auto;
-            text-align: center;
         }
         .title {
             font-size: 4.55em;
@@ -64,14 +72,14 @@
         
         .subtitle {
             font-size: 2.08em;
-            margin-top: 20px;
+            margin-top: 10px;
             font-weight: 300;
             text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
         }
         .button {
             display: inline-block;
             padding: 15.6px 45.5px;
-            margin-top: 40px;
+            margin-top: 26px;
             font-size: 1.69em;
             color: white;
             background: linear-gradient(45deg, rgba(223, 197, 136, 0.8), rgba(223, 197, 136, 0.8));
@@ -87,25 +95,24 @@
             box-shadow: 0 4px 15px rgba(223, 197, 136, 0.9);
         }
         .stats {
-            margin-top: 50px;
+            margin-top: 39px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 40px 0;
+            padding: 26px 0;
             background: black;
-            width: 100%;
         }
         .logo {
-            width: 233px;
+            width: 364px;
             height: auto;
-            margin-bottom: 20px;
+            margin-bottom: 13px;
         }
         .stat-container {
             display: flex;
             justify-content: center;
-            gap: 40px;
+            gap: 52px;
             flex-wrap: wrap;
-            margin-bottom: 20px;
+            margin-bottom: 13px;
         }
         .stat {
             font-size: 1.82em;
@@ -113,13 +120,16 @@
             text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
         }
         .map {
-            width: 874px;
-            height: 466px;
-            margin-top: 30px;
+            width: 1366px;
+            height: 729px;
+            margin-top: 26px;
         }
     </style>
 </head>
 <body>
+    <div class="top-bar">
+        <img src="icon.png" alt="Site Icon">
+    </div>
     <div class="hero">
         <div class="overlay"></div>
         <div class="container">
