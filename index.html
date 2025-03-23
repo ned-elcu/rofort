@@ -45,7 +45,7 @@
             height: 50px;
         }
 
-        .stop-button {
+        .music-button {
             background-color: rgba(223, 197, 136, 0.8);
             color: white;
             border: none;
@@ -55,7 +55,7 @@
             border-radius: 5px;
             transition: 0.3s;
         }
-        .stop-button:hover {
+        .music-button:hover {
             background-color: darkred;
         }
 
@@ -172,7 +172,7 @@
 <body>
     <div class="top-bar">
         <img src="icon.png" alt="Site Icon">
-        <button class="stop-button" onclick="stopMusic()">Stop Music</button>
+        <button class="music-button" onclick="toggleMusic()">Play Music</button>
     </div>
 
     <div class="hero">
@@ -195,21 +195,30 @@
         <img src="art3.png" alt="art3" class="art3">
     </div>
     
-    <audio id="background-music" autoplay loop>
+    <audio id="background-music" loop>
         <source src="music.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
     
     <script>
+        // Set initial volume when the document is loaded
         document.addEventListener("DOMContentLoaded", function() {
             let audio = document.getElementById("background-music");
-            audio.volume = 0.1; // Set volume to 20%
+            audio.volume = 0.1; // 10% volume
         });
 
-        function stopMusic() {
+        let isPlaying = false;
+        function toggleMusic() {
             let audio = document.getElementById("background-music");
-            audio.pause();
-            audio.currentTime = 0;
+            let button = document.querySelector(".music-button");
+            if (isPlaying) {
+                audio.pause();
+                button.textContent = "Play Music";
+            } else {
+                audio.play();
+                button.textContent = "Stop Music";
+            }
+            isPlaying = !isPlaying;
         }
     </script>
 </body>
