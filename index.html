@@ -1,248 +1,290 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ROFORT</title>
-    <link rel="icon" type="image/png" href="icon.png">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
-        
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ROFORT</title>
+  <link rel="icon" type="image/png" href="icon.png">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+    
+    /* Reset and basic styling */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+    html, body {
+      width: 100%;
+      max-width: 100vw;
+      background: black;
+      color: white;
+      font-family: 'Bebas Neue', sans-serif;
+      text-align: center;
+      font-size: 1.3em;
+    }
 
-        html, body {
-            width: 100%;
-            max-width: 100vw;
-            background: black;
-            color: white;
-            font-family: 'Bebas Neue', sans-serif;
-            text-align: center;
-            font-size: 1.3em;
-        }
+    /* Canvas for falling star effect */
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;  /* Places the stars behind everything */
+    }
 
-        .top-bar {
-            width: 100%;
-            height: 70px;
-            background: black;
-            display: flex;
-            justify-content: flex-start; /* Aligns items to the left */
-            align-items: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            padding: 0 15px;
-            gap: 15px; /* Adds spacing between the items */
-        }
+    /* Top Bar styling */
+    .top-bar {
+      width: 100%;
+      height: 70px;
+      background: black;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      padding: 0 15px;
+      gap: 15px;
+    }
+    .top-bar img {
+      width: 50px;
+      height: 50px;
+    }
+    .blog-button, .music-button {
+      background-color: rgba(223, 197, 136, 0.8);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+    .blog-button:hover, .music-button:hover {
+      background-color: coral;
+    }
 
-        .top-bar img {
-            width: 50px;
-            height: 50px;
-        }
-       
-        .blog-button {
-            background-color: rgba(223, 197, 136, 0.8);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 20px;
-            border-radius: 5px;
-            transition: 0.3s;
-            
-        }
-        .blog-button:hover{
-            background-color: coral
-        }
-        
-        
-        .music-button {
-            background-color: rgba(223, 197, 136, 0.8);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 20px;
-            border-radius: 5px;
-            transition: 0.3s;
-        }
-        .music-button:hover {
-            background-color: coral;
-        }
+    /* Hero section with background.png */
+    .hero {
+      background: url('background.png') no-repeat center center/cover;
+      padding: 104px 26px;
+      position: relative;
+      margin-top: 75px;
+      width: 100%;
+      max-width: 100vw;
+    }
+    .overlay {
+      background: rgba(14, 17, 19, 0.8);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .container {
+      position: relative;
+      max-width: 900px;
+      margin: auto;
+      padding: 0 15px;
+    }
+    .title {
+      font-size: 4.55em;
+      font-weight: bold;
+      text-transform: uppercase;
+      text-shadow: 0 0 10px rgba(223, 197, 136, 0.8),
+                   0 0 20px rgba(223, 197, 136, 0.8),
+                   0 0 30px rgba(223, 197, 136, 0.8);
+      animation: neonGlow 1.5s infinite alternate ease-in-out;
+    }
+    @keyframes neonGlow {
+      0% {
+        text-shadow: 0 0 5px rgba(223, 197, 136, 0.8),
+                     0 0 10px rgba(223, 197, 136, 0.8),
+                     0 0 15px rgba(223, 197, 136, 0.8);
+        opacity: 0.8;
+      }
+      100% {
+        text-shadow: 0 0 20px rgba(223, 197, 136, 0.8),
+                     0 0 30px rgba(223, 197, 136, 0.8),
+                     0 0 40px rgba(223, 197, 136, 0.8);
+        opacity: 1;
+      }
+    }
+    .subtitle {
+      font-size: 2.08em;
+      margin-top: 10px;
+      font-weight: 300;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+    }
+    .button {
+      display: inline-block;
+      padding: 15.6px 45.5px;
+      margin-top: 26px;
+      font-size: 1.69em;
+      color: white;
+      background: linear-gradient(45deg, rgba(223, 197, 136, 0.8), rgba(223, 197, 136, 0.8));
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      text-transform: uppercase;
+      transition: 0.3s;
+      box-shadow: 0 4px 15px rgba(223, 197, 136, 0.5);
+    }
+    .button:hover {
+      background: linear-gradient(45deg, rgba(223, 197, 136, 0.8), black);
+      box-shadow: 0 4px 15px rgba(223, 197, 136, 0.9);
+    }
 
-        .hero {
-            background: url('background.png') no-repeat center center/cover;
-            padding: 104px 26px;
-            position: relative;
-            margin-top: 75px;
-            width: 100%;
-            max-width: 100vw;
-        }
-
-        .overlay {
-            background: rgba(14, 17, 19, 0.8);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        .container {
-            position: relative;
-            max-width: 900px;
-            margin: auto;
-            padding: 0 15px;
-        }
-
-        .title {
-            font-size: 4.55em;
-            font-weight: bold;
-            text-transform: uppercase;
-            text-shadow: 0 0 10px rgba(223, 197, 136, 0.8), 0 0 20px rgba(223, 197, 136, 0.8), 0 0 30px rgba(223, 197, 136, 0.8);
-            animation: neonGlow 1.5s infinite alternate ease-in-out;
-        }
-        
-        @keyframes neonGlow {
-            0% {
-                text-shadow: 0 0 5px rgba(223, 197, 136, 0.8), 0 0 10px rgba(223, 197, 136, 0.8), 0 0 15px rgba(223, 197, 136, 0.8);
-                opacity: 0.8;
-            }
-            100% {
-                text-shadow: 0 0 20px rgba(223, 197, 136, 0.8), 0 0 30px rgba(223, 197, 136, 0.8), 0 0 40px rgba(223, 197, 136, 0.8);
-                opacity: 1;
-            }
-        }
-        
-        .subtitle {
-            font-size: 2.08em;
-            justify-content: center; 
-            margin-top: 10px;
-            font-weight: 300;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
-        }
-
-        .button {
-            display: inline-block;
-            padding: 15.6px 45.5px;
-            margin-top: 26px;
-            font-size: 1.69em;
-            color: white;
-            background: linear-gradient(45deg, rgba(223, 197, 136, 0.8), rgba(223, 197, 136, 0.8));
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: bold;
-            text-transform: uppercase;
-            transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(223, 197, 136, 0.5);
-        }
-        .button:hover {
-            justify-content: center; 
-            background: linear-gradient(45deg, rgba(223, 197, 136, 0.8), black);
-            box-shadow: 0 4px 15px rgba(223, 197, 136, 0.9);
-        }
-
-        .stats {
-            margin-top: 39px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 26px 0;
-            background: black;
-            width: 100%;
-        }
-
-        .logo {
-            width: 90%;
-            max-width: 364px;
-            height: auto;
-            margin-bottom: 13px;
-        }
-
-        .stat-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-bottom: 13px;
-            width: 100%;
-        }
-
-        .stat {
-            font-size: 1.5em;
-            font-weight: bold;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
-        }
-
-        .art3 {
-            width: 90%;
-            max-width: 900px;
-            height: auto;
-            margin-top: 26px;
-        }
-    </style>
+    /* Stats section styling */
+    .stats {
+      margin-top: 39px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 26px 0;
+      background: black;
+      width: 100%;
+    }
+    .logo {
+      width: 90%;
+      max-width: 364px;
+      height: auto;
+      margin-bottom: 13px;
+    }
+    .stat-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 13px;
+      width: 100%;
+    }
+    .stat {
+      font-size: 1.5em;
+      font-weight: bold;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+    }
+    .art3 {
+      width: 90%;
+      max-width: 900px;
+      height: auto;
+      margin-top: 26px;
+    }
+  </style>
 </head>
 <body>
-    <div class="top-bar">
-        <img src="icon.png" alt="Site Icon">
-        <a href="blog.html" class="blog-button">BLOG</a>
-        <button class="music-button" onclick="toggleMusic()">Play Music</button>
-    </div>
+  <!-- Canvas for Falling Star Effect -->
+  <canvas id="starCanvas"></canvas>
 
-    <div class="hero">
-        <div class="overlay"></div>
-        <div class="container">
-            <h1 class="title">ROFORT CLAN HAS RISEN!</h1>
-            <p class="subtitle">Join the first founded Romanian clan in Anvil Empires.</p>
-            <a href="https://discord.gg/V7WR48kkke" class="button">Join our Discord</a>
-        </div>
-    </div>
+  <!-- Top Navigation Bar -->
+  <div class="top-bar">
+    <img src="icon.png" alt="Site Icon">
+    <a href="blog.html" class="blog-button">BLOG</a>
+    <button class="music-button" onclick="toggleMusic()">Play Music</button>
+  </div>
 
-    <div class="stats">
-        <img src="aelogo.png" alt="AE Logo" class="logo">
-        <div class="stat-container">
-            <div class="stat">FRĂȚIE</div>
-            <div class="stat">RESPECT</div>
-            <div class="stat">ÎNȚELEGERE</div>
-            <div class="stat">EXPERIENȚĂ</div>
-        </div>
-        <img src="art3.png" alt="art3" class="art3">
+  <!-- Hero Section -->
+  <div class="hero">
+    <div class="overlay"></div>
+    <div class="container">
+      <h1 class="title">ROFORT CLAN HAS RISEN!</h1>
+      <p class="subtitle">Join the first founded Romanian clan in Anvil Empires.</p>
+      <a href="https://discord.gg/V7WR48kkke" class="button">Join our Discord</a>
     </div>
-    
-    <audio id="background-music" loop>
-        <source src="music.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-    
-    <script>
-        // Set initial volume when the document is loaded
-        document.addEventListener("DOMContentLoaded", function() {
-            let audio = document.getElementById("background-music");
-            audio.volume = 0.1; // 10% volume
-        });
+  </div>
 
-        let isPlaying = false;
-        function toggleMusic() {
-            let audio = document.getElementById("background-music");
-            let button = document.querySelector(".music-button");
-            if (isPlaying) {
-                audio.pause();
-                button.textContent = "Play Music";
-            } else {
-                audio.play();
-                button.textContent = "Stop Music";
-            }
-            isPlaying = !isPlaying;
-        }
-    </script>
-    
+  <!-- Stats Section -->
+  <div class="stats">
+    <img src="aelogo.png" alt="AE Logo" class="logo">
+    <div class="stat-container">
+      <div class="stat">FRĂȚIE</div>
+      <div class="stat">RESPECT</div>
+      <div class="stat">ÎNȚELEGERE</div>
+      <div class="stat">EXPERIENȚĂ</div>
+    </div>
+    <img src="art3.png" alt="art3" class="art3">
+  </div>
+  
+  <!-- Background Music Setup -->
+  <audio id="background-music" loop>
+    <source src="music.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  
+  <script>
+    // Music control
+    document.addEventListener("DOMContentLoaded", function() {
+      let audio = document.getElementById("background-music");
+      audio.volume = 0.1;
+    });
+    let isPlaying = false;
+    function toggleMusic() {
+      let audio = document.getElementById("background-music");
+      let button = document.querySelector(".music-button");
+      if (isPlaying) {
+        audio.pause();
+        button.textContent = "Play Music";
+      } else {
+        audio.play();
+        button.textContent = "Stop Music";
+      }
+      isPlaying = !isPlaying;
+    }
+
+    // Falling Star Effect Script
+    const canvas = document.getElementById("starCanvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+    class Star {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height * 0.5;
+        this.speed = Math.random() * 3 + 1;
+        this.length = Math.random() * 5 + 5;
+        this.opacity = 1;
+      }
+      draw() {
+        ctx.strokeStyle = `rgba(255, 255, 255, ${this.opacity})`;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(this.x, this.y);
+        ctx.lineTo(this.x + this.length, this.y + this.length);
+        ctx.stroke();
+      }
+      update() {
+        this.x += this.speed;
+        this.y += this.speed;
+        this.opacity -= 0.01;
+        if (this.opacity <= 0) this.reset();
+      }
+    }
+    const stars = [];
+    for (let i = 0; i < 50; i++) {
+      stars.push(new Star());
+    }
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      stars.forEach(star => {
+        star.update();
+        star.draw();
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
 </body>
 </html>
