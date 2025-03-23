@@ -44,19 +44,37 @@
             width: 50px;
             height: 50px;
         }
-
+       
+        .blog-button {
+            background-color: rgba(223, 197, 136, 0.8);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 20px;
+            border-radius: 5px;
+            transition: 0.3s;
+            
+        }
+        .blog-button:hover{
+            background-color: coral
+        }
+        
+        
         .music-button {
             background-color: rgba(223, 197, 136, 0.8);
             color: white;
             border: none;
             padding: 10px 20px;
             cursor: pointer;
-            font-size: 16px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 20px;
             border-radius: 5px;
             transition: 0.3s;
         }
         .music-button:hover {
-            background-color: darkred;
+            background-color: coral;
         }
 
         .hero {
@@ -172,6 +190,7 @@
 <body>
     <div class="top-bar">
         <img src="icon.png" alt="Site Icon">
+        <a href="blog.html" class="blog-button">BLOG</a>
         <button class="music-button" onclick="toggleMusic()">Play Music</button>
     </div>
 
@@ -221,5 +240,6 @@
             isPlaying = !isPlaying;
         }
     </script>
+    
 </body>
 </html>
