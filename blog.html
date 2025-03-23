@@ -17,42 +17,30 @@
       color: white;
       font-family: 'Bebas Neue', sans-serif;
       text-align: center;
+      position: relative;
+      overflow-x: hidden;
     }
     
+    /* Top Bar: All elements aligned to the left */
     .top-bar {
-        width: 100%;
-        height: 70px;
-        background: black;
-        display: flex;
-        justify-content: flex-start; /* Aligns items to the left */
-        align-items: center;
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 1000;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-        padding: 0 15px;
-        gap: 15px; /* Adds spacing between the items */
-    }
-    
-    .left-section,
-    .center-section,
-    .right-section {
-      flex: 1;
+      width: 100%;
+      height: 70px;
+      background: black;
       display: flex;
-      align-items: center;
-    }
-    
-    .left-section {
       justify-content: flex-start;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      padding: 0 15px;
+      gap: 15px;
     }
     
-    .center-section {
-      justify-content: center;
-    }
-    
-    .right-section {
-      justify-content: flex-end;
+    .top-bar img {
+      height: 50px;
+      width: 50px;
     }
     
     .blog-button {
@@ -78,6 +66,8 @@
       max-width: 800px;
       margin: auto;
       padding: 20px;
+      position: relative;
+      z-index: 1001; /* Ensure content is above the star canvas */
     }
     
     .blog-post {
@@ -94,16 +84,29 @@
       display: block;
       margin: 0 auto;
     }
+    
+    /* Overlay Canvas for Star Effect */
+    #starCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 999; /* Place below the top-bar and blog content */
+      pointer-events: none;
+      background: transparent;
+    }
   </style>
 </head>
 <body>
+  <!-- Top Navigation Bar -->
   <div class="top-bar">
     <img src="icon.png" alt="Site Icon">
     <a href="index.html" class="blog-button">HOME</a>
     <a href="https://discord.gg/V7WR48kkke" class="blog-button">Join our Discord</a>
-
   </div>
   
+  <!-- Blog Content -->
   <div class="blog-container">
     <h1>ROFORT Blog</h1>
     <div class="blog-post">
@@ -116,8 +119,101 @@
       <p class="courier">
         We officially launched in the March 17th Anvil Empires playtest, focusing on building our very own lumbermill to supply our faction with reinforced wooden planks. We quickly secured a forested area, gathered logs, and processed them into valuable resources for our fortifications and siege equipment. Despite facing minor enemy interference, we maintained steady production and ensured our materials were safely transported. Our collective efforts strengthened our faction’s defenses and freed up our allied forces for frontline combat.
       </p>
-    <p>Members: drTONG, antiKILLER</p>
+      <p>Members: drTONG, antiKILLER</p>
     </div>
   </div>
+  
+  <!-- Star Effect Canvas -->
+  <canvas id="starCanvas"></canvas>
+  
+  <script>
+    // Set up canvas for star effect
+    const canvas = document.getElementById("starCanvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+    
+    // Variables for mouse tracking and cursor influence
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    const factor = 0.05; // adjust to control movement strength
+    
+    document.addEventListener("mousemove", (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+    
+    // Star class with glowing and looping behavior
+    class Star {
+      constructor() {
+        this.reset(true);
+      }
+      reset(initial) {
+        // Random initial position across the canvas
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        // Random movement speed
+        this.speed = Math.random() * 1 + 0.5;
+        // Star size (length)
+        this.length = Math.random() * 2 + 1;
+        if (!initial) {
+          // Wrap stars when leaving the canvas
+          if (this.x > canvas.width) this.x = 0;
+          if (this.x < 0) this.x = canvas.width;
+          if (this.y > canvas.height) this.y = 0;
+          if (this.y < 0) this.y = canvas.height;
+        }
+      }
+      update() {
+        // Stars drift diagonally
+        this.x += this.speed;
+        this.y += this.speed;
+        // Wrap around if off-screen
+        if (this.x > canvas.width || this.y > canvas.height) {
+          this.reset(false);
+        }
+      }
+      draw() {
+        // Calculate offset from mouse movement (opposite to cursor position)
+        const offsetX = (canvas.width / 2 - mouseX) * factor;
+        const offsetY = (canvas.height / 2 - mouseY) * factor;
+        const posX = this.x + offsetX;
+        const posY = this.y + offsetY;
+        
+        ctx.save();
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = "white";
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = this.length;
+        ctx.beginPath();
+        ctx.moveTo(posX, posY);
+        ctx.lineTo(posX + this.length, posY + this.length);
+        ctx.stroke();
+        ctx.restore();
+      }
+    }
+    
+    // Create and animate stars
+    const stars = [];
+    for (let i = 0; i < 100; i++) {
+      stars.push(new Star());
+    }
+    
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      stars.forEach((star) => {
+        star.update();
+        star.draw();
+      });
+      requestAnimationFrame(animate);
+    }
+    
+    animate();
+  </script>
 </body>
 </html>
