@@ -20,18 +20,19 @@
     }
     
     .top-bar {
-      width: 100%;
-      height: 70px;
-      background: black;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 1000;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-      padding: 0 15px;
+        width: 100%;
+        height: 70px;
+        background: black;
+        display: flex;
+        justify-content: flex-start; /* Aligns items to the left */
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        padding: 0 15px;
+        gap: 15px; /* Adds spacing between the items */
     }
     
     .left-section,
@@ -97,15 +98,10 @@
 </head>
 <body>
   <div class="top-bar">
-    <div class="left-section">
-      <img src="icon.png" alt="Site Icon">
-    </div>
-    <div class="center-section">
-      <a href="index.html" class="blog-button">HOME</a>
-    </div>
-    <div class="right-section">
-     <a href="https://discord.gg/V7WR48kkke" class="blog-button">Join our Discord</a>
-    </div>
+    <img src="icon.png" alt="Site Icon">
+    <a href="index.html" class="blog-button">HOME</a>
+    <a href="https://discord.gg/V7WR48kkke" class="blog-button">Join our Discord</a>
+
   </div>
   
   <div class="blog-container">
