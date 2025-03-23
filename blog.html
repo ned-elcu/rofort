@@ -5,12 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ROFORT - Blog</title>
   <link rel="icon" type="image/png" href="icon.png">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap">
   <style>
     .courier {
       font-family: 'Courier New';
       font-size: 18px;
     }
     
+    /* Reset & Basic Styling */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
     body {
       padding-top: 70px;
       background: black;
@@ -19,7 +26,6 @@
       text-align: center;
       position: relative;
       overflow-x: hidden;
-      /* Subtle background animation */
       animation: backgroundPulse 10s ease-in-out infinite;
     }
     
@@ -29,7 +35,7 @@
       100% { background-color: #000; }
     }
     
-    /* Top Bar: All elements aligned to the left */
+    /* Top Navigation Bar */
     .top-bar {
       width: 100%;
       height: 70px;
@@ -71,30 +77,57 @@
       text-decoration: none;
     }
     
+    /* Blog Container - Styled like the Homepage Story Section */
     .blog-container {
       max-width: 800px;
-      margin: auto;
-      padding: 20px;
+      margin: 50px auto;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(223, 197, 136, 0.3);
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(223, 197, 136, 0.3);
+      text-align: left;
+      line-height: 1.6;
       position: relative;
       z-index: 1001; /* Ensure content is above the star canvas */
-      animation: float 3s ease-in-out infinite;
     }
     
-    @keyframes float {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-5px); }
-      100% { transform: translateY(0); }
+    /* Blog Heading */
+    .blog-container h1 {
+      text-align: center;
+      font-size: 2.8em;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(223, 197, 136, 0.5);
     }
     
+    /* Blog Post Styling - Similar treatment to the story quotes and paragraphs */
     .blog-post {
-      background: rgba(223, 197, 136, 0.2);
-      padding: 15px;
-      margin: 15px 0;
+      background: rgba(223, 197, 136, 0.15);
+      padding: 20px;
+      margin: 20px 0;
       border-radius: 8px;
       transition: transform 0.3s ease;
     }
     
-    /* Shake animation on hover */
+    .blog-post h2 {
+      font-size: 2em;
+      margin-bottom: 10px;
+      color: coral;
+      border-bottom: 1px solid rgba(223, 197, 136, 0.5);
+      padding-bottom: 5px;
+    }
+    
+    .blog-post p {
+      margin-bottom: 15px;
+    }
+    
+    .blog-post:hover {
+      animation: shake 0.5s;
+      animation-iteration-count: 1;
+    }
+    
+    /* Shake animation on hover for blog posts */
     @keyframes shake {
       0% { transform: translate(1px, 1px) rotate(0deg); }
       10% { transform: translate(-1px, -2px) rotate(-1deg); }
@@ -109,17 +142,12 @@
       100% { transform: translate(1px, -2px) rotate(-1deg); }
     }
     
-    .blog-post:hover {
-      animation: shake 0.5s;
-      animation-iteration-count: 1;
-    }
-    
-    /* Ensure images in blog posts fit inside the container */
+    /* Images inside blog posts */
     .blog-post img {
       max-width: 100%;
       height: auto;
       display: block;
-      margin: 0 auto;
+      margin: 10px auto;
     }
     
     /* Overlay Canvas for Star Effect */
@@ -129,7 +157,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: 999; /* Place below the top-bar and blog content */
+      z-index: 999; /* Below the top-bar and blog content */
       pointer-events: none;
       background: transparent;
     }
@@ -189,7 +217,6 @@
     class Star {
       constructor() {
         this.reset(true);
-        // Set up sparkle variables
         this.baseOpacity = 0.5;
         this.opacity = this.baseOpacity;
         this.sparkleTimer = 0;
@@ -197,14 +224,11 @@
         this.nextSparkle = Math.floor(Math.random() * 120) + 60; // 60-180 frames until next burst
       }
       reset(initial) {
-        // Random initial position across the canvas
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        // Random movement speed and star size
         this.speed = Math.random() * 1 + 0.5;
         this.length = Math.random() * 2 + 1;
         if (!initial) {
-          // Wrap stars when leaving the canvas
           if (this.x > canvas.width) this.x = 0;
           if (this.x < 0) this.x = canvas.width;
           if (this.y > canvas.height) this.y = 0;
@@ -212,25 +236,19 @@
         }
       }
       update() {
-        // Stars drift diagonally
         this.x += this.speed;
         this.y += this.speed;
         if (this.x > canvas.width || this.y > canvas.height) {
           this.reset(false);
         }
-        
-        // Handle sparkle behavior
         if (this.nextSparkle > 0) {
           this.nextSparkle--;
           this.opacity = this.baseOpacity;
         } else {
-          // In sparkle burst
           this.sparkleTimer++;
           if (this.sparkleTimer < this.sparkleDuration) {
-            // Burst to full brightness
             this.opacity = 1;
           } else {
-            // End burst and reset sparkle timers
             this.opacity = this.baseOpacity;
             this.sparkleTimer = 0;
             this.nextSparkle = Math.floor(Math.random() * 120) + 60;
@@ -239,12 +257,10 @@
         }
       }
       draw() {
-        // Calculate offset from mouse movement (opposite to cursor position)
         const offsetX = (canvas.width / 2 - mouseX) * factor;
         const offsetY = (canvas.height / 2 - mouseY) * factor;
         const posX = this.x + offsetX;
         const posY = this.y + offsetY;
-        
         ctx.save();
         ctx.shadowBlur = 10;
         ctx.shadowColor = `rgba(255, 255, 255, ${this.opacity})`;
