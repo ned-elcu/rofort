@@ -15,11 +15,19 @@
             margin: 0;
             padding: 0;
             font-size: 1.3em;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         .hero {
             background: url('background.png') no-repeat center center/cover;
             padding: 104px 26px;
             position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
         }
         .overlay {
             background: rgba(14, 17, 19, 0.8);
@@ -33,6 +41,7 @@
             position: relative;
             max-width: 900px;
             margin: auto;
+            text-align: center;
         }
         .title {
             font-size: 4.55em;
@@ -55,14 +64,14 @@
         
         .subtitle {
             font-size: 2.08em;
-            margin-top: 10px;
+            margin-top: 20px;
             font-weight: 300;
             text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
         }
         .button {
             display: inline-block;
             padding: 15.6px 45.5px;
-            margin-top: 26px;
+            margin-top: 40px;
             font-size: 1.69em;
             color: white;
             background: linear-gradient(45deg, rgba(223, 197, 136, 0.8), rgba(223, 197, 136, 0.8));
@@ -78,24 +87,25 @@
             box-shadow: 0 4px 15px rgba(223, 197, 136, 0.9);
         }
         .stats {
-            margin-top: 39px;
+            margin-top: 50px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 26px 0;
+            padding: 40px 0;
             background: black;
+            width: 100%;
         }
         .logo {
-            width: 364px;
+            width: 233px;
             height: auto;
-            margin-bottom: 13px;
+            margin-bottom: 20px;
         }
         .stat-container {
             display: flex;
             justify-content: center;
-            gap: 52px;
+            gap: 40px;
             flex-wrap: wrap;
-            margin-bottom: 13px;
+            margin-bottom: 20px;
         }
         .stat {
             font-size: 1.82em;
@@ -103,9 +113,9 @@
             text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
         }
         .map {
-            width: 1366px;
-            height: 729px;
-            margin-top: 26px;
+            width: 874px;
+            height: 466px;
+            margin-top: 30px;
         }
     </style>
 </head>
