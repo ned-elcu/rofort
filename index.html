@@ -30,7 +30,7 @@
             height: 70px;
             background: black;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start; /* Aligns items to the left */
             align-items: center;
             position: fixed;
             top: 0;
@@ -38,6 +38,7 @@
             z-index: 1000;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
             padding: 0 15px;
+            gap: 15px; /* Adds spacing between the items */
         }
 
         .top-bar img {
@@ -123,6 +124,7 @@
         
         .subtitle {
             font-size: 2.08em;
+            justify-content: center; 
             margin-top: 10px;
             font-weight: 300;
             text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
@@ -143,6 +145,7 @@
             box-shadow: 0 4px 15px rgba(223, 197, 136, 0.5);
         }
         .button:hover {
+            justify-content: center; 
             background: linear-gradient(45deg, rgba(223, 197, 136, 0.8), black);
             box-shadow: 0 4px 15px rgba(223, 197, 136, 0.9);
         }
