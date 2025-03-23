@@ -12,7 +12,7 @@
       font-size: 16px;
     }    
       
-    /* Reset & basic styling */
+    /* Reset & Basic Styling */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -70,7 +70,7 @@
       background: transparent;
     }
 
-    /* Top Bar styling */
+    /* Top Bar Styling */
     .top-bar {
       width: 100%;
       height: 70px;
@@ -208,18 +208,6 @@
       animation: fadeIn 1s ease-out;
     }
 
-    /* Fable Info Styling */
-    .fable-info {
-      max-width: 800px;
-      margin: 50px auto 20px;
-      padding: 10px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(223, 197, 136, 0.2);
-      border-radius: 5px;
-      text-align: center;
-      font-size: 1em; /* Reduced by 10% from 1.1em */
-    }
-
     /* Story Section Styling */
     .story {
       max-width: 800px;
@@ -248,6 +236,20 @@
       border-left: 3px solid rgba(223, 197, 136, 0.5);
       padding-left: 15px;
       color: #ddd;
+    }
+
+    /* Back-to-Top Button */
+    .back-to-top {
+      margin: 40px auto 0;
+      cursor: pointer;
+    }
+    
+    /* Minimalistic Copyright Styling */
+    p.copyright {
+      text-align: center;
+      margin: 20px auto 40px;
+      font-size: 0.9em;
+      color: rgba(223, 197, 136, 0.8);
     }
   </style>
 </head>
@@ -279,11 +281,6 @@
       <div class="stat">EXPERIENȚĂ</div>
     </div>
     <img src="art3.png" alt="art3" class="art3" />
-  </div>
-
-  <!-- Fable Info -->
-  <div class="fable-info">
-    <p>Inspired by: <strong>The Dog and the Puppy (A Retelling of Grigore Alexandrescu’s Fable)</strong></p>
   </div>
 
   <!-- Story Section -->
@@ -319,12 +316,18 @@
     <p class="courier">At <b>ROFORT</b>, we believe in creating <b>true balance</b>, where <b>order is maintained through structure</b>, but where <b>respect, love, and human equality</b> are not just spoken ideals, but living values. Unlike Lupus, who upheld hierarchy for his own benefit, ROFORT strives for a world where everyone is truly valued—not just in words, but in <b>real opportunity, mutual respect, and shared success</b>. Because equality should never be a false promise, but a principle lived by all.</p>
   </section>
 
+  <!-- Back-to-Top Button -->
+  <a href="#" class="button back-to-top">Back to Top</a>
+  
+  <!-- Minimalistic Copyright -->
+  <p class="copyright">ROFORT.lol © 2025. All rights reserved.</p>
+
   <audio id="background-music" loop>
     <source src="music.mp3" type="audio/mpeg" />
     Your browser does not support the audio element.
   </audio>
 
-  <!-- Star effect Canvas -->
+  <!-- Star Effect Canvas -->
   <canvas id="starCanvas"></canvas>
 
   <script>
@@ -451,6 +454,12 @@
     window.addEventListener('scroll', () => {
       const scrollPos = window.scrollY;
       hero.style.backgroundPosition = `center ${-scrollPos * 0.3}px`;
+    });
+
+    // Smooth scroll to top for the back-to-top button
+    document.querySelector('.back-to-top').addEventListener('click', function(e) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   </script>
 </body>
