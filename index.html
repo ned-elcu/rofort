@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>ROFORT</title>
-  <link rel="icon" type="image/png" href="icon.png">
+  <link rel="icon" type="image/png" href="icon.png" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
-    
-    /* Reset and basic styling */
+
+    /* Reset & basic styling */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -25,14 +25,16 @@
       font-size: 1.3em;
     }
 
-    /* Canvas for falling star effect */
+    /* Overlay Canvas for Star Effect */
     canvas {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: -1;  /* Places the stars behind everything */
+      z-index: 10000; /* Overlay on top of everything */
+      pointer-events: none; /* Allow clicks to pass through */
+      background: transparent;
     }
 
     /* Top Bar styling */
@@ -46,7 +48,7 @@
       position: fixed;
       top: 0;
       left: 0;
-      z-index: 1000;
+      z-index: 11000; /* Above canvas */
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
       padding: 0 15px;
       gap: 15px;
@@ -55,7 +57,8 @@
       width: 50px;
       height: 50px;
     }
-    .blog-button, .music-button {
+    .blog-button,
+    .music-button {
       background-color: rgba(223, 197, 136, 0.8);
       color: white;
       border: none;
@@ -66,11 +69,12 @@
       border-radius: 5px;
       transition: 0.3s;
     }
-    .blog-button:hover, .music-button:hover {
+    .blog-button:hover,
+    .music-button:hover {
       background-color: coral;
     }
 
-    /* Hero section with background.png */
+    /* Hero Section */
     .hero {
       background: url('background.png') no-repeat center center/cover;
       padding: 104px 26px;
@@ -141,7 +145,7 @@
       box-shadow: 0 4px 15px rgba(223, 197, 136, 0.9);
     }
 
-    /* Stats section styling */
+    /* Stats Section */
     .stats {
       margin-top: 39px;
       display: flex;
@@ -179,17 +183,13 @@
   </style>
 </head>
 <body>
-  <!-- Canvas for Falling Star Effect -->
-  <canvas id="starCanvas"></canvas>
-
-  <!-- Top Navigation Bar -->
+  <!-- Content of your site -->
   <div class="top-bar">
-    <img src="icon.png" alt="Site Icon">
+    <img src="icon.png" alt="Site Icon" />
     <a href="blog.html" class="blog-button">BLOG</a>
     <button class="music-button" onclick="toggleMusic()">Play Music</button>
   </div>
 
-  <!-- Hero Section -->
   <div class="hero">
     <div class="overlay"></div>
     <div class="container">
@@ -199,34 +199,35 @@
     </div>
   </div>
 
-  <!-- Stats Section -->
   <div class="stats">
-    <img src="aelogo.png" alt="AE Logo" class="logo">
+    <img src="aelogo.png" alt="AE Logo" class="logo" />
     <div class="stat-container">
       <div class="stat">FRĂȚIE</div>
       <div class="stat">RESPECT</div>
       <div class="stat">ÎNȚELEGERE</div>
       <div class="stat">EXPERIENȚĂ</div>
     </div>
-    <img src="art3.png" alt="art3" class="art3">
+    <img src="art3.png" alt="art3" class="art3" />
   </div>
-  
-  <!-- Background Music Setup -->
+
   <audio id="background-music" loop>
-    <source src="music.mp3" type="audio/mpeg">
+    <source src="music.mp3" type="audio/mpeg" />
     Your browser does not support the audio element.
   </audio>
-  
+
+  <!-- Star effect Canvas -->
+  <canvas id="starCanvas"></canvas>
+
   <script>
     // Music control
     document.addEventListener("DOMContentLoaded", function() {
-      let audio = document.getElementById("background-music");
+      const audio = document.getElementById("background-music");
       audio.volume = 0.1;
     });
     let isPlaying = false;
     function toggleMusic() {
-      let audio = document.getElementById("background-music");
-      let button = document.querySelector(".music-button");
+      const audio = document.getElementById("background-music");
+      const button = document.querySelector(".music-button");
       if (isPlaying) {
         audio.pause();
         button.textContent = "Play Music";
@@ -237,7 +238,16 @@
       isPlaying = !isPlaying;
     }
 
-    // Falling Star Effect Script
+    // Variables for mouse tracking
+    let mouseX = window.innerWidth / 2,
+        mouseY = window.innerHeight / 2;
+    const factor = 0.05;
+    document.addEventListener("mousemove", (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    // Set up canvas for star effect
     const canvas = document.getElementById("starCanvas");
     const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
@@ -246,39 +256,66 @@
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     });
+
+    // Star class with glowing and looping behavior
     class Star {
       constructor() {
-        this.reset();
+        this.reset(true);
       }
-      reset() {
+      reset(initial) {
+        // Random initial position across the canvas
         this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height * 0.5;
-        this.speed = Math.random() * 3 + 1;
-        this.length = Math.random() * 5 + 5;
-        this.opacity = 1;
-      }
-      draw() {
-        ctx.strokeStyle = `rgba(255, 255, 255, ${this.opacity})`;
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(this.x, this.y);
-        ctx.lineTo(this.x + this.length, this.y + this.length);
-        ctx.stroke();
+        this.y = Math.random() * canvas.height;
+        // Random movement speed
+        this.speed = Math.random() * 1 + 0.5;
+        // Star size (length)
+        this.length = Math.random() * 2 + 1;
+        // If initial, set a random offset for continuous movement
+        if (!initial) {
+          // When a star leaves, reposition it to the opposite edge
+          if (this.x > canvas.width) this.x = 0;
+          if (this.x < 0) this.x = canvas.width;
+          if (this.y > canvas.height) this.y = 0;
+          if (this.y < 0) this.y = canvas.height;
+        }
       }
       update() {
+        // Stars drift in one direction (diagonally down-right)
         this.x += this.speed;
         this.y += this.speed;
-        this.opacity -= 0.01;
-        if (this.opacity <= 0) this.reset();
+        // Wrap around when off screen
+        if (this.x > canvas.width || this.y > canvas.height) {
+          this.reset();
+        }
+      }
+      draw() {
+        // Calculate offset from mouse movement (opposite to cursor position)
+        const offsetX = (canvas.width / 2 - mouseX) * factor;
+        const offsetY = (canvas.height / 2 - mouseY) * factor;
+        const posX = this.x + offsetX;
+        const posY = this.y + offsetY;
+        ctx.save();
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = "white";
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = this.length;
+        ctx.beginPath();
+        // Draw a simple line or dot for the star
+        ctx.moveTo(posX, posY);
+        ctx.lineTo(posX + this.length, posY + this.length);
+        ctx.stroke();
+        ctx.restore();
       }
     }
+
+    // Create and animate stars
     const stars = [];
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 100; i++) {
       stars.push(new Star());
     }
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      stars.forEach(star => {
+      stars.forEach((star) => {
         star.update();
         star.draw();
       });
